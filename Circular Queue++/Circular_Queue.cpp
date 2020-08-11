@@ -70,7 +70,7 @@ Status Circular_Queue::QueueTraverse()
 	{
 		while ((i + cq.front) != cq.rear)
 		{
-			std::cout << cq.data[i];
+			std::cout << cq.data[i]<<" ";
 			i = (i + 1) % MAXSIZE;
 		}
 		std::cout << std::endl;
