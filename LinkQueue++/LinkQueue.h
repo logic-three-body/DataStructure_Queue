@@ -33,6 +33,6 @@ public:
 	/* 若队列不空,删除Q的队头元素,用e返回其值,并返回OK,否则返回ERROR */
 	Status DeQueue(QElemType &);
 	/* 从队头到队尾依次对队列Q中每个元素输出 */
-	Status QueueTraverse(LinkQueue );
+	Status QueueTraverse();
 };
 

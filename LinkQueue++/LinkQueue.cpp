@@ -16,6 +16,7 @@ Status LinkQueue::DestroyQueue()
 		delete lqr.front;
 		lqr.front = lqr.rear;
 	}
+	delete lqr.front;
 	return OK;
 }
 
@@ -46,6 +47,10 @@ Status LinkQueue::ClearQueue()
 
 int LinkQueue::QueueLength()
 {
+	if (QueueEmpty())
+	{
+		return 0;
+	}
 	int len = 0;
 	QueuePtr p;
 	p = lqr.front;
@@ -99,13 +104,18 @@ Status LinkQueue::DeQueue(QElemType &elem)
 	return OK;
 }
 
-Status LinkQueue::QueueTraverse(LinkQueue)
+Status LinkQueue::QueueTraverse()
 {
+	if (QueueEmpty())
+	{
+		std::cout << "ENMPTY!!!"<<std::endl;
+		return ERROR;
+	}
 	QueuePtr p;
 	p = lqr.front->next;
 	while (p)
 	{
-		std::cout << p->data;
+		std::cout << p->data<<" ";
 		p = p->next;
 	}
 	std::cout << std::endl;
