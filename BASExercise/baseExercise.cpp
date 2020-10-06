@@ -3,7 +3,7 @@
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
-#define MAXSIZE 5 /* 存储空间初始分配量 */
+#define MAXSIZE 100 /* 存储空间初始分配量 */
 
 typedef int Status;
 
@@ -94,7 +94,7 @@ Status Circular_Queue::QueueEmpty()
 
 Status Circular_Queue::QueueFull()
 {
-	if ((cq.rear + 1) % MAXSIZE == cq.front)
+	if (cq.rear == (cq.front - 1 + MAXSIZE) % MAXSIZE)
 	{
 		tag = OK;
 	}
@@ -120,14 +120,14 @@ Status Circular_Queue::GetHead(QElemType & elem)
 	return OK;
 }
 
-Status Circular_Queue::EnQueue(QElemType elem)
+Status Circular_Queue::EnQueue(QElemType elem)//从队首入并向下标小的方向发展
 {
 	if (QueueFull())
 	{
 		return ERROR;
 	}
-	cq.data[cq.rear] = elem;
-	cq.rear = (cq.rear + 1) % MAXSIZE;
+	cq.data[cq.front] = elem;
+	cq.front = (cq.front - 1+MAXSIZE) % MAXSIZE;
 	return OK;
 }
 
@@ -137,8 +137,8 @@ Status Circular_Queue::DeQueue(QElemType &elem)
 	{
 		return ERROR;
 	}
-	elem = cq.data[cq.front];
-	cq.front = (cq.front + 1) % MAXSIZE;
+	elem = cq.data[cq.rear];
+	cq.rear = (cq.rear - 1) % MAXSIZE;
 	return OK;
 }
 
@@ -148,31 +148,32 @@ Status Circular_Queue::DeQueue()
 	{
 		return ERROR;
 	}
-	cq.front = (cq.front + 1) % MAXSIZE;
+	cq.rear = (cq.rear - 1) % MAXSIZE;
 	return OK;
 }
 
 
 Status Circular_Queue::QueueTraverse()
 {
-	int i = cq.front;
+	int i = cq.rear;
 	if (QueueEmpty())
 	{
 		return ERROR;
 	}
 	else
 	{
-		while ((i + cq.front) != cq.rear)
+		while ((cq.rear - i + MAXSIZE)%MAXSIZE  != cq.front)
 		{
-			if ((i + cq.front) == cq.rear-1)
+			int index = (cq.rear - i + MAXSIZE) % MAXSIZE;
+			if ((cq.rear - i + MAXSIZE) % MAXSIZE == cq.front+1)
 			{
-				std::cout << cq.data[i];
+				std::cout << cq.data[index];
 			}
 			else
 			{
-				std::cout << cq.data[i] << " ";
+				std::cout << cq.data[index] << " ";
 			}
-			i = (i + 1) % MAXSIZE;
+			++i;
 		}
 		std::cout << std::endl;
 	}
