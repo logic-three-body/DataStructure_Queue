@@ -1,4 +1,4 @@
-#include "stdio.h"    
+#include "stdio.h"    //CirQue linear
 #include "stdlib.h"   
 #include "io.h"  
 #include "math.h"  
